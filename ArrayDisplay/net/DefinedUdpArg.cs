@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace ArrayDisplay.net {
+namespace ArrayDisplay.Net {
     public class ConstUdpArg {
         #region IP与端口field
 
@@ -466,13 +466,23 @@ namespace ArrayDisplay.net {
             59, 91, 123, 155, 187, 219, 251, 28, 60, 92, 124, 156, 188, 220, 252, 29, 61, 93, 125, 157, 189, 221, 253, 30, 62, 94, 126, 158, 190, 222,
             254, 31, 63, 95, 127, 159, 191, 223, 255, 32, 64, 96, 128, 160, 192, 224, 256
         };
+        public static int[] offsetArrayTwo = {
+            1,  9,  17, 25, 33, 41, 49, 57,
+            2,  10, 18, 26, 34, 42, 50, 58,
+            3,  11, 19, 27, 35, 43, 51, 59,
+            4,  12, 20, 28, 36, 44, 52, 60,
+            5,  13, 21, 29, 37, 45, 53, 61,
+            6,  14, 22, 30, 38, 46, 54, 62,
+            7,  15, 23, 31, 39, 47, 55, 63,
+            8,  16, 24, 32, 40, 48, 56, 64
+        };
         #endregion
 
 
         #region 常量定义
 
         //阵元数
-        public const int ARRAY_NUM = 256; //阵元数
+        public const int ARRAY_NUM = 64; //阵元数
         public const int ARRAY_USED = 64; //阵元数
         //Buffer设置
 //        public const int WORK_FRAME_NUMS = 31250; //正常工作波形同时显示帧数

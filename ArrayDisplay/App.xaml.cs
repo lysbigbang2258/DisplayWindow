@@ -1,27 +1,14 @@
-﻿using System.IO;
-using System.Windows;
-using ArrayDisplay.DataFile;
-using ArrayDisplay.DiscFile;
-using ArrayDisplay.net;
-using log4net;
-using log4net.Config;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <summary>
+//   App.xaml 的交互逻辑
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ArrayDisplay {
+    using System.Windows;
+
     /// <summary>
     ///     App.xaml 的交互逻辑
     /// </summary>
-    public class App : Application {
-        public static ILog log = LogManager.GetLogger("MyLogger");
-
-        protected override void OnStartup(StartupEventArgs e) {
-            RelativeDirectory rd = new RelativeDirectory();
-            string log4NetConfigFilePath = Path.Combine(rd.Path, "Log4net\\Log4net.config");
-            XmlConfigurator.ConfigureAndWatch(new FileInfo(log4NetConfigFilePath));
-            
-        }
-
-        protected override void OnExit(ExitEventArgs e) {
-            base.OnExit(e);
-        }
-    }
+    public class App : Application { }
 }

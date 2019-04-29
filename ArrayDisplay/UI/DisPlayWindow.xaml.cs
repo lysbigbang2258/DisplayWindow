@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using ArrayDisplay.DiscFile;
-using ArrayDisplay.net;
+using ArrayDisplay.Net;
 using ArrayDisplay.sound;
 using NationalInstruments.Restricted;
 using Binding = System.Windows.Data.Binding;
@@ -114,11 +114,6 @@ namespace ArrayDisplay.UI {
             set;
         }
 
-        public bool IsOrigWaveStart {
-            get;
-            set;
-        }
-
         public bool IsWorkWaveStart {
             get;
             set;
@@ -196,7 +191,6 @@ namespace ArrayDisplay.UI {
             DelayChannel = 0;
             OrigTiv = 0;
             IsGraphPause = false;
-            IsOrigWaveStart = false;
             IsWorkWaveStart = false;
             MainStopwatch = new Stopwatch();
             led_workdata.FalseBrush = new SolidColorBrush(Colors.Red); //正常工作指示灯
@@ -313,18 +307,23 @@ namespace ArrayDisplay.UI {
             IsGraphPause = false;
 
             if (OrigWaveData != null) {
+                OrigWaveData.ExitFlag = true;
+                OrigWaveData.Dispose();
                 OrigWaveData = null;
-                IsOrigWaveStart = false;
             }
             if (NormWaveData != null) {
+                NormWaveData.ExitFlag = true;
+                NormWaveData.Dispose();
                 NormWaveData = null;
             }
             if (DelayWaveData != null) {
+                DelayWaveData.ExitFlag = true;
+                DelayWaveData.Dispose();
                 DelayWaveData = null;
             }
         }
 
-        void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+        async void  TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             SelectionChangedEventArgs slcArg = e;
             if (slcArg.RemovedItems.IsEmpty()) {
                 return;
@@ -337,15 +336,15 @@ namespace ArrayDisplay.UI {
             IsGraphPause = false;
             switch(arg.Name) {
                 case "delayItem": {
-                    Task.Run(() => {
-                                 udpCommandSocket.SwitchWindow(ConstUdpArg.SwicthToDeleyWindow);
-                                 InitGrapheState();
-                                 Console.WriteLine("关闭延时波形");
-                             });
+                    await Task.Run(() => {
+                                       udpCommandSocket.SwitchWindow(ConstUdpArg.SwicthToDeleyWindow);
+                                       InitGrapheState();
+                                       Console.WriteLine("关闭延时波形");
+                                   });
                 }
                     break;
                 case "origItem": {
-                    Task.Run(() => {
+                    await Task.Run(() => {
                                  udpCommandSocket.SwitchWindow(ConstUdpArg.SwicthToOriginalWindow);
                                  InitGrapheState();
                                  Console.WriteLine("关闭原始波形");
@@ -353,7 +352,7 @@ namespace ArrayDisplay.UI {
                 }
                     break;
                 case "normalItem": {
-                    Task.Run(() => {
+                    await Task.Run(() => {
                                  udpCommandSocket.SwitchWindow(ConstUdpArg.SwicthToNormalWindow);
                                  InitGrapheState();
                                  Console.WriteLine("关闭正常工作波形");
@@ -408,18 +407,17 @@ namespace ArrayDisplay.UI {
                                  btn_delaystart.Dispatcher.InvokeAsync(() => {
                                                                            btn_delaystart.Content = "停止";
                                                                        });
-                                 Console.WriteLine(MainStopwatch.ElapsedMilliseconds);
                                  DelayWaveData.StartRcvEvent.Set();
                              }
                              else if (DelayWaveData != null || DelayWaveData.IsBuilded) {
-                                 DelayWaveData.Dispose();
-                                 IsGraphPause = false;
-                                 DelayWaveData = null;
+                                 InitGrapheState();
                                  btn_delaystart.Dispatcher.InvokeAsync(() => {
                                                                            btn_delaystart.Content = "启动";
                                                                        });
-                                 delay_graph.Dispatcher.Invoke(() => {
+                                 delay_graph.Dispatcher.InvokeAsync(() => {
+                                                                   delay_graph.DataSource = 0;
                                                                    delay_graph.Refresh();
+                                                                   
                                                                });
                              }
                              else if (DelayWaveData.IsBuilded && !DelayWaveData.IsRcving) {
@@ -649,22 +647,21 @@ namespace ArrayDisplay.UI {
                 udpCommandSocket.SwitchWindow(ConstUdpArg.SwicthToOriginalWindow);
                 if (OrigWaveData == null) {
                     OrigWaveData = new UdpWaveData();
+                    OrigWaveData.ExitFlag = false;
                     OrigWaveData.StartReceiveData(ConstUdpArg.Src_OrigWaveIp);
                     udpCommandSocket.WriteOrigChannel(OrigChannel);
                     udpCommandSocket.WriteOrigTDiv(OrigTiv);
                     btn_origstart.Content = "停止";
-                    IsOrigWaveStart = true;
                     OrigWaveData.StartRcvEvent.Set();
                 }
                 else if (OrigWaveData != null || OrigWaveData.IsBuilded) {
-                    OrigWaveData.Dispose();
-                    OrigWaveData = null;
+                   InitGrapheState();
                     btn_origstart.Content = "启动";
-                    IsGraphPause = false;
-                    IsOrigWaveStart = false;
-                    orige_graph.Dispatcher.Invoke(() => {
+                    
+                    orige_graph.Dispatcher.InvokeAsync(() => {
                                                       orige_graph.DataSource = 0;
-                                                  });
+                                                           orige_graph.Refresh();
+                                                       });
                     orige_graph.Refresh();
                 }
             }
@@ -1196,21 +1193,20 @@ namespace ArrayDisplay.UI {
                     NormWaveData.StartRcvEvent.Set();
                 }
                 else if (NormWaveData != null || NormWaveData.IsBuilded) {
-                    NormWaveData.Dispose();
-                    NormWaveData = null;
-                    IsGraphPause = false;
-                    graph_normalTime.Dispatcher.Invoke(() => {
+                    InitGrapheState();
+                    graph_normalTime.Dispatcher.InvokeAsync(() => {
                                                            graph_normalTime.DataSource = 0;
                                                        });
                     graph_normalTime.Refresh();
-                    graph_normalFrequency.Dispatcher.Invoke(() => {
+                    graph_normalFrequency.Dispatcher.InvokeAsync(() => {
                                                                 graph_normalFrequency.DataSource = 0;
                                                             });
                     graph_normalFrequency.Refresh();
-                    graph_energyFirst.Dispatcher.Invoke(() => {
+                    graph_energyFirst.Dispatcher.InvokeAsync(() => {
                                                             graph_energyFirst.DataSource = 0;
+                                                            graph_energyFirst.Refresh();
                                                         });
-                    graph_energyFirst.Refresh();
+                    
                     btn_workstart.Content = "启动";
                 }
             }

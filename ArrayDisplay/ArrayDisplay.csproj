@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -80,7 +80,8 @@
     </Compile>
     <Compile Include="MyUserControl\Axis.cs" />
     <Compile Include="MyUserControl\AxisPoint.cs" />
-    <Compile Include="net\WaveSocket.cs" />
+    <Compile Include="Net\Complex.cs" />
+    <Compile Include="Net\WaveSocket.cs" />
     <Compile Include="UI\UIBValue.cs" />
     <Compile Include="UI\IndexConver.cs" />
     <Compile Include="MyUserControl\CutData.cs" />
@@ -94,26 +95,26 @@
     <Compile Include="MyUserControl\FrequencyWave\CordAxis.cs" />
     <Compile Include="MyUserControl\FrequencyWave\DynamicAxis2.cs" />
     <Compile Include="DiscFile\RelativeDirectory.cs" />
-    <Compile Include="net\ComData.cs">
+    <Compile Include="Net\ComData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\Dataproc.cs">
+    <Compile Include="Net\Dataproc.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\DefinedUdpArg.cs">
+    <Compile Include="Net\DefinedUdpArg.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\FFT_TransForm.cs">
+    <Compile Include="Net\FFT_TransForm.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\NewFFT.cs" />
-    <Compile Include="net\SystemInfo.cs">
+    <Compile Include="Net\NewFFT.cs" />
+    <Compile Include="Net\SystemInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\UdpWaveData.cs">
+    <Compile Include="Net\UdpWaveData.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="net\UdpCommandSocket.cs">
+    <Compile Include="Net\UdpCommandSocket.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
@@ -122,10 +123,7 @@
       <DependentUpon>DisPlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DiscFile\DefineConst.cs" />
-    <Compile Include="net\IniFile.cs" />
-    <Compile Include="UI\StateWindow.xaml.cs">
-      <DependentUpon>StateWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Net\IniFile.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -151,10 +149,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\DisPlayWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\StateWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

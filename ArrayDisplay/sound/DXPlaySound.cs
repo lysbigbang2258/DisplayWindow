@@ -104,7 +104,7 @@ namespace ArrayDisplay.sound {
                     {
                         Array.Clear(temp, 0, temp.Length);
                         scdBuffer.Write(temp, 0, mNotifySize, offset * mNotifySize, LockFlags.None);
-                        App.log.InfoFormat("声音数据不连续....{0},{1},{2}", playpos, wrpos, playBuf.Count);
+                        
                     }
                     scdBuffer.Play(0, PlayFlags.Looping);
                     Console.WriteLine("Second:  " + DateTime.Now.Second);

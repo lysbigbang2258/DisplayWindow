@@ -1,252 +1,359 @@
-﻿// 201903282:33 PM
+﻿// 201812284:30 PM
+namespace ArrayDisplay.Net {
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ArrayDisplay.Annotations;
+    using ArrayDisplay.Annotations;
 
-namespace ArrayDisplay.net {
-    public class SystemInfo : INotifyPropertyChanged
-    {
+    /// <summary>
+    /// The system info.
+    /// </summary>
+    public sealed class SystemInfo : INotifyPropertyChanged {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SystemInfo"/> class.
+        /// </summary>
+        public SystemInfo() {
+            this.mcId = string.Empty;
+            this.mcMac = string.Empty;
+            this.mcType = string.Empty;
+            this.pulseDelay = -1;
+            this.pulsePeriod = -1;
+            this.pulseWidth = -1;
+            this.adcNum = 1;
+
+            this.adcOffset = string.Empty;
+            this.delayChannel = 1;
+            this.delayTime = 1;
+
+            this.daclen = 3000;
+            this.dacChannel = 2;
+            this.origFrams = 200;
+            this.origChannel = 1;
+            this.origTdiv = 1;
+        }
+
+        /// <summary>
+        /// The property changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// The on property changed.
+        /// </summary>
+        /// <param name="propertyName">
+        /// The property name.
+        /// </param>
+        [NotifyPropertyChangedInvocator]
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         #region Field
 
-        string mcId = string.Empty;
-        string mcMac = string.Empty;
-        string mcType = string.Empty;
-        int pulseDelay = -1;
-        int pulsePeriod = -1;
-        int pulseWidth = -1;
-        int adcNum = 1;
+        /// <summary>
+        /// The mc id.
+        /// </summary>
+        string mcId;
 
-        string adcOffset = string.Empty;
-        int delayChannel = 1;
+        /// <summary>
+        /// The mc mac.hun
+        /// </summary>
+        string mcMac;
+
+        /// <summary>
+        /// The mc type.
+        /// </summary>
+        string mcType;
+
+        /// <summary>
+        /// The pulse delay.
+        /// </summary>
+        int pulseDelay;
+
+        /// <summary>
+        /// The pulse period.
+        /// </summary>
+        int pulsePeriod;
+
+        /// <summary>
+        /// The pulse width.
+        /// </summary>
+        int pulseWidth;
+
+        /// <summary>
+        /// The adc num.
+        /// </summary>
+        int adcNum;
+
+        /// <summary>
+        /// The adc offset.
+        /// </summary>
+        string adcOffset;
+
+        /// <summary>
+        /// The delay channel.
+        /// </summary>
+        int delayChannel;
+
+        /// <summary>
+        /// The delay time.
+        /// </summary>
         int delayTime;
-        
-        int daclen = 3000;
-        int dacChannel = 2;
-        int origFrams = 20;
-        int origChannel = 1;
-        int origTdiv = 1;
 
-        int workChannel = 1;
+        /// <summary>
+        /// The daclen.
+        /// </summary>
+        int daclen;
+
+        /// <summary>
+        /// The dac channel.
+        /// </summary>
+        int dacChannel;
+
+        /// <summary>
+        /// The orig frams.
+        /// </summary>
+        int origFrams;
+
+        /// <summary>
+        /// The orig channel.
+        /// </summary>
+        int origChannel;
+
+        /// <summary>
+        /// The orig tdiv.
+        /// </summary>
+        int origTdiv;
+
+        /// <summary>
+        /// The work channel.
+        /// </summary>
+        int workChannel;
+
         #endregion
 
         #region Property
-        /// <summary>设备类型</summary>
+
+        /// <summary>
+        /// Gets or sets the mc type.
+        /// 设备类型
+        /// </summary>
         public string McType {
-            get {
-                return mcType;
-            }
+            get => this.mcType;
+
             set {
-                if (value != mcType) {
-                    mcType = value;
-                    OnPropertyChanged();
+                if (value == this.mcType) {
+                    return;
                 }
+                this.mcType = value;
+                this.OnPropertyChanged();
             }
         }
 
-        /// <summary>设备ID</summary>
+        /// <summary>
+        /// Gets or sets the mc id.
+        /// 设备ID
+        /// </summary>
         public string McId {
-            get {
-                return mcId;
-            }
+            get => this.mcId;
+
             set {
-                if (value != mcId) {
-                    mcId = value;
-                    OnPropertyChanged();
+                if (value == this.mcId) {
+                    return;
                 }
+                this.mcId = value;
+                this.OnPropertyChanged();
             }
         }
 
-        /// <summary>设备MAC</summary>
+        /// <summary>
+        /// Gets or sets the mc mac.
+        /// 设备MAC
+        /// </summary>
         public string McMac {
-            get {
-                return mcMac;
-            }
+            get => this.mcMac;
+
             set {
-                if (value != mcMac) {
-                    mcMac = value;
-                    OnPropertyChanged();
+                if (value != this.mcMac) {
+                    this.mcMac = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>adc偏移</summary>
+        /// <summary>
+        /// Gets or sets the adc offset.
+        /// adc偏移
+        /// </summary>
         public string AdcOffset {
-            get {
-                return adcOffset;
-            }
+            get => this.adcOffset;
+
             set {
-                if (value != adcOffset) {
-                    adcOffset = value;
-                    OnPropertyChanged();
+                if (value != this.adcOffset) {
+                    this.adcOffset = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>adc偏移.adcID</summary>
+        /// <summary>
+        /// Gets or sets the adc num.
+        /// adc偏移.adcID
+        /// </summary>
         public int AdcNum {
-            get {
-                return adcNum;
-            }
+            get => this.adcNum;
+
             set {
-                if (value != adcNum) {
-                    adcNum = value;
-                    OnPropertyChanged();
+                if (value != this.adcNum) {
+                    this.adcNum = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>脉冲周期</summary>
+        /// <summary>
+        /// Gets or sets the pulse period.
+        /// 脉冲周期
+        /// </summary>
         public int PulsePeriod {
-            get {
-                return pulsePeriod;
-            }
+            get => this.pulsePeriod;
+
             set {
-                if (value != pulsePeriod) {
-                    pulsePeriod = value;
-                    OnPropertyChanged();
+                if (value != this.pulsePeriod) {
+                    this.pulsePeriod = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>脉冲延时</summary>
+        /// <summary>
+        /// Gets or sets the pulse delay.
+        /// 脉冲延时
+        /// </summary>
         public int PulseDelay {
-            get {
-                return pulseDelay;
-            }
+            get => this.pulseDelay;
+
             set {
-                if (value != pulseDelay) {
-                    pulseDelay = value;
-                    OnPropertyChanged();
+                if (value != this.pulseDelay) {
+                    this.pulseDelay = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>脉冲宽度</summary>
+        /// <summary>
+        /// Gets or sets the pulse width.
+        /// 脉冲宽度
+        /// </summary>
         public int PulseWidth {
-            get {
-                return pulseWidth;
-            }
+            get => this.pulseWidth;
+
             set {
-                if (value != pulseWidth) {
-                    pulseWidth = value;
-                    OnPropertyChanged();
+                if (value != this.pulseWidth) {
+                    this.pulseWidth = value;
+                    this.OnPropertyChanged();
                 }
             }
         }
 
-        //延迟通道号
+        /// <summary>
+        /// Gets or sets the delay channel.
+        /// 延时通道
+        /// </summary>
         public int DelayChannel {
-            get {
-                return delayChannel;
-            }
+            get => this.delayChannel;
+
             set {
-                delayChannel = value;
-                OnPropertyChanged();
+                this.delayChannel = value;
+                this.OnPropertyChanged();
             }
         }
 
-        //通道延迟值
+        /// <summary>
+        /// Gets or sets the delay time.
+        /// 延时时间量
+        /// </summary>
         public int DelayTime {
-            get {
-                return delayTime;
-            }
+            get => this.delayTime;
+
             set {
-                delayTime = value;
-                OnPropertyChanged();
+                this.delayTime = value;
+                this.OnPropertyChanged();
             }
         }
 
-        //工作波形
-        public int WorkChannel
-        {
-            get
-            {
-                return workChannel;
-            }
-            set
-            {
-                workChannel = value;
-                OnPropertyChanged();
+        /// <summary>
+        /// Gets or sets the work channel.
+        /// 工作通道
+        /// </summary>
+        public int WorkChannel {
+            get => this.workChannel;
+
+            set {
+                this.workChannel = value;
+                this.OnPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Gets or sets the dac lenth.
+        /// DAC长度
+        /// </summary>
+        public int DacLenth {
+            get => this.daclen;
+
+            set {
+                this.daclen = value;
+                this.OnPropertyChanged();
+            }
+        }
         
-        //Dac长度
-        public int DacLenth
-        {
-            get
-            {
-                return daclen;
-            }
-            set
-            {
-                daclen = value;
-                OnPropertyChanged();
-            }
-        }
-        //Dac通道
-        public int DacChannel
-        {
-            get
-            {
-                return dacChannel;
-            }
-            set
-            {
-                dacChannel = value;
-                OnPropertyChanged();
+        /// <summary>
+        /// Gets or sets the dac channel.
+        /// Dac通道
+        /// </summary>
+        public int DacChannel {
+            get => this.dacChannel;
+
+            set {
+                this.dacChannel = value;
+                this.OnPropertyChanged();
             }
         }
-        //原始数据帧数
-        public int OrigFramNums
-        {
-            get
-            {
-                return origFrams;
-            }
-            set
-            {
-                origFrams = value;
-                OnPropertyChanged();
+
+        /// <summary>
+        /// Gets or sets the orig fram nums.
+        /// 原始数据帧数
+        /// </summary>
+        public int OrigFramNums {
+            get => this.origFrams;
+
+            set {
+                this.origFrams = value;
+                this.OnPropertyChanged();
             }
         }
-        //原始通道
+
+        /// <summary>
+        /// Gets or sets the orig channel.
+        /// // 原始通道
+        /// </summary>
         public int OrigChannel {
-            get {
-                return origChannel;
-            }
-            set {
-                origChannel = value;
-            }
+            get => this.origChannel;
+
+            set => this.origChannel = value;
         }
-        //原始时分
+
+        /// <summary>
+        /// Gets or sets the orig tdiv.
+        /// 原始时分
+        /// </summary>
         public int OrigTdiv {
-            get {
-                return origTdiv;
-            }
-            set {
-                origTdiv = value;
-            }
+            get => this.origTdiv;
+
+            set => this.origTdiv = value;
         }
-
         #endregion
-
-        #region Method
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        
-
-        #endregion
-        
     }
 }
