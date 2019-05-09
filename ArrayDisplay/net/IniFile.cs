@@ -6,8 +6,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using ArrayDisplay.DataFile;
+using ArrayDisplay.DiscFile;
 
-namespace ArrayDisplay.net {
+namespace ArrayDisplay.Net {
   public class Config
   {
     IniFile iniFile;

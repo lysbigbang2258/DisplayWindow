@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ArrayDisplay.DataFile {
+namespace ArrayDisplay.DiscFile {
     class RelativeDirectory {
         // Author D. Bolton see http://cplus.about.com (c) 2010
         DirectoryInfo dirInfo;

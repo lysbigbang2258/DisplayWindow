@@ -30,7 +30,7 @@ namespace ArrayDisplay.sound {
         {
             device = new DirectSound(); //音频设备对象
 
-            IntPtr hwnd = new WindowInteropHelper(DisPlayWindow.hMainWindow).Handle; //设置窗口句柄
+            IntPtr hwnd = new WindowInteropHelper(DisPlayWindow.HMainWindow).Handle; //设置窗口句柄
             device.SetCooperativeLevel(hwnd, CooperativeLevel.Priority);
 
             //设置Wav音频文件对象属性
@@ -104,7 +104,7 @@ namespace ArrayDisplay.sound {
                     {
                         Array.Clear(temp, 0, temp.Length);
                         scdBuffer.Write(temp, 0, mNotifySize, offset * mNotifySize, LockFlags.None);
-                        App.log.InfoFormat("声音数据不连续....{0},{1},{2}", playpos, wrpos, playBuf.Count);
+                        
                     }
                     scdBuffer.Play(0, PlayFlags.Looping);
                     Console.WriteLine("Second:  " + DateTime.Now.Second);

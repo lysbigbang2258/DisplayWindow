@@ -5,7 +5,7 @@ using System.Windows;
 using NationalInstruments;
 using NationalInstruments.Analysis.Dsp;
 
-namespace ArrayDisplay.net {
+namespace ArrayDisplay.Net {
     public static class NewFFT {
 
 
