@@ -30,6 +30,7 @@ namespace ArrayDisplay.Net {
             this.origFrams = 200;
             this.origChannel = 1;
             this.origTdiv = 1;
+            workChannel = 1;
         }
 
         /// <summary>

@@ -479,9 +479,7 @@ namespace ArrayDisplay.Net {
                     this.StartRcvEvent.Dispose();
                 }
 
-                if (this.StartRcvEvent != null) {
-                    this.StartRcvEvent.Dispose();
-                }
+
 
                 if (this.RcvThread != null) {
                     this.RcvThread.Abort();
